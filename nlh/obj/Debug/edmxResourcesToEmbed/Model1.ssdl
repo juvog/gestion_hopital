@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="nlhModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="admission">
+    <Key>
+      <PropertyRef Name="idAdmission" />
+    </Key>
+    <Property Name="idAdmission" Type="int" Nullable="false" />
+    <Property Name="chirurgieProg" Type="bit" />
+    <Property Name="dateAdmission" Type="date" />
+    <Property Name="dateChirurgie" Type="date" />
+    <Property Name="dateConge" Type="date" />
+    <Property Name="televiseur" Type="bit" />
+    <Property Name="telephone" Type="bit" />
+    <Property Name="prixReduit" Type="bit" />
+    <Property Name="nss" Type="int" />
+    <Property Name="noLit" Type="int" />
+    <Property Name="idMedecin" Type="varchar" MaxLength="5" />
+  </EntityType>
+  <EntityType Name="Assurance">
+    <Key>
+      <PropertyRef Name="idassurance" />
+    </Key>
+    <Property Name="idassurance" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="nomCompagnie" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Departement">
+    <Key>
+      <PropertyRef Name="idDepartement" />
+    </Key>
+    <Property Name="idDepartement" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="nomDepartement" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Lit">
+    <Key>
+      <PropertyRef Name="noLit" />
+    </Key>
+    <Property Name="noLit" Type="int" Nullable="false" />
+    <Property Name="occupe" Type="bit" Nullable="false" />
+    <Property Name="idType" Type="varchar" MaxLength="5" />
+    <Property Name="idDepartement" Type="varchar" MaxLength="5" />
+  </EntityType>
+  <EntityType Name="Medecin">
+    <Key>
+      <PropertyRef Name="idMedecin" />
+    </Key>
+    <Property Name="idMedecin" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="nomMedecin" Type="varchar" MaxLength="20" />
+    <Property Name="prenomMedecin" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Patient">
+    <Key>
+      <PropertyRef Name="nss" />
+    </Key>
+    <Property Name="nss" Type="int" Nullable="false" />
+    <Property Name="dateN" Type="date" Nullable="false" />
+    <Property Name="nom" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="prenom" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="adresse" Type="varchar" MaxLength="20" />
+    <Property Name="ville" Type="varchar" MaxLength="20" />
+    <Property Name="codeP" Type="varchar" MaxLength="20" />
+    <Property Name="telephone" Type="varchar" MaxLength="20" />
+    <Property Name="nssParent" Type="int" />
+    <Property Name="idAssurance" Type="varchar" MaxLength="5" />
+  </EntityType>
+  <EntityType Name="TypeLit">
+    <Key>
+      <PropertyRef Name="idType" />
+    </Key>
+    <Property Name="idType" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="description" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <Association Name="FK__admission__idMed__00200768">
+    <End Role="Medecin" Type="Self.Medecin" Multiplicity="0..1" />
+    <End Role="admission" Type="Self.admission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Medecin">
+        <PropertyRef Name="idMedecin" />
+      </Principal>
+      <Dependent Role="admission">
+        <PropertyRef Name="idMedecin" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__admission__noLit__7F2BE32F">
+    <End Role="Lit" Type="Self.Lit" Multiplicity="0..1" />
+    <End Role="admission" Type="Self.admission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lit">
+        <PropertyRef Name="noLit" />
+      </Principal>
+      <Dependent Role="admission">
+        <PropertyRef Name="noLit" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__admission__nss__7E37BEF6">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="0..1" />
+    <End Role="admission" Type="Self.admission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="nss" />
+      </Principal>
+      <Dependent Role="admission">
+        <PropertyRef Name="nss" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Lit__idDeparteme__7B5B524B">
+    <End Role="Departement" Type="Self.Departement" Multiplicity="0..1" />
+    <End Role="Lit" Type="Self.Lit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departement">
+        <PropertyRef Name="idDepartement" />
+      </Principal>
+      <Dependent Role="Lit">
+        <PropertyRef Name="idDepartement" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Lit__idType__7A672E12">
+    <End Role="TypeLit" Type="Self.TypeLit" Multiplicity="0..1" />
+    <End Role="Lit" Type="Self.Lit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TypeLit">
+        <PropertyRef Name="idType" />
+      </Principal>
+      <Dependent Role="Lit">
+        <PropertyRef Name="idType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Patient__idAssur__778AC167">
+    <End Role="Assurance" Type="Self.Assurance" Multiplicity="0..1" />
+    <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Assurance">
+        <PropertyRef Name="idassurance" />
+      </Principal>
+      <Dependent Role="Patient">
+        <PropertyRef Name="idAssurance" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="nlhModelStoreContainer">
+    <EntitySet Name="admission" EntityType="Self.admission" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Assurance" EntityType="Self.Assurance" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Departement" EntityType="Self.Departement" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Lit" EntityType="Self.Lit" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Medecin" EntityType="Self.Medecin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TypeLit" EntityType="Self.TypeLit" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__admission__idMed__00200768" Association="Self.FK__admission__idMed__00200768">
+      <End Role="Medecin" EntitySet="Medecin" />
+      <End Role="admission" EntitySet="admission" />
+    </AssociationSet>
+    <AssociationSet Name="FK__admission__noLit__7F2BE32F" Association="Self.FK__admission__noLit__7F2BE32F">
+      <End Role="Lit" EntitySet="Lit" />
+      <End Role="admission" EntitySet="admission" />
+    </AssociationSet>
+    <AssociationSet Name="FK__admission__nss__7E37BEF6" Association="Self.FK__admission__nss__7E37BEF6">
+      <End Role="Patient" EntitySet="Patient" />
+      <End Role="admission" EntitySet="admission" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Lit__idDeparteme__7B5B524B" Association="Self.FK__Lit__idDeparteme__7B5B524B">
+      <End Role="Departement" EntitySet="Departement" />
+      <End Role="Lit" EntitySet="Lit" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Lit__idType__7A672E12" Association="Self.FK__Lit__idType__7A672E12">
+      <End Role="TypeLit" EntitySet="TypeLit" />
+      <End Role="Lit" EntitySet="Lit" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Patient__idAssur__778AC167" Association="Self.FK__Patient__idAssur__778AC167">
+      <End Role="Assurance" EntitySet="Assurance" />
+      <End Role="Patient" EntitySet="Patient" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

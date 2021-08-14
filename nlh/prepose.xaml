@@ -1,0 +1,55 @@
+﻿<Window x:Class="nlh.prepose"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:nlh"
+        mc:Ignorable="d"
+        Title="prepose" Height="737" Width="864" >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="190*"/>
+            <ColumnDefinition Width="370*"/>
+            <ColumnDefinition Width="165*"/>
+            <ColumnDefinition Width="61*"/>
+        </Grid.ColumnDefinitions>
+
+
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="220" Margin="55,165,0,0" VerticalAlignment="Top" Width="721" Grid.ColumnSpan="3"/>
+
+
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="75" Margin="55,440,0,0" VerticalAlignment="Top" Width="485" Grid.ColumnSpan="2"/>
+
+
+        <Label Content="RECHERCHER/AJOUTER UN PATIENT" HorizontalAlignment="Left" Margin="80,25,0,0" VerticalAlignment="Top" Width="253" Grid.Column="1"/>
+        <Label Content="NSS : " HorizontalAlignment="Left" Margin="156,84,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.526,-0.385" Width="78" Grid.ColumnSpan="2"/>
+        <Button x:Name="btnAdmission" Content="Admission" HorizontalAlignment="Left" Margin="118,570,0,0" VerticalAlignment="Top" Width="160" Click="btnAdmission_Click" Grid.Column="1"/>
+        <Button x:Name="btnAjouterPatient" Content="Ajouter Patient" HorizontalAlignment="Left" Margin="74,570,0,0" VerticalAlignment="Top" Width="160" RenderTransformOrigin="0.267,0" Click="btnAjouterPatient_Click" IsCancel="True" Grid.ColumnSpan="2" />
+        <TextBox x:Name="txtNSS" HorizontalAlignment="Left" Height="23" Margin="80,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
+        <Label Content="Date Nais. : " HorizontalAlignment="Left" Margin="85,190,0,0" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.317,0.462"/>
+        <Label Content="Nom : " HorizontalAlignment="Left" Margin="85,242,0,0" VerticalAlignment="Top" Width="63"/>
+        <Label Content="Prénom : " HorizontalAlignment="Left" Margin="85,291,0,0" VerticalAlignment="Top" Width="63"/>
+        <Label Content="Adresse : " HorizontalAlignment="Left" Margin="215,186,0,0" VerticalAlignment="Top" Width="63" Grid.Column="1"/>
+        <TextBox x:Name="txtNom"  Text="{Binding nom}" HorizontalAlignment="Left" Height="23" Margin="21,244,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsUndoEnabled="True" IsReadOnly="True" Grid.Column="1"/>
+        <TextBox x:Name="txtPrenom" Text="{Binding prenom}" HorizontalAlignment="Left" Height="23" Margin="21,297,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsUndoEnabled="True" IsReadOnly="True" Grid.Column="1"/>
+        <TextBox x:Name="txtAdresse" Text="{Binding adresse}" HorizontalAlignment="Left" Height="23" Margin="380,186,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" IsReadOnly="True" Grid.Column="1"/>
+        <Label Content="Code Postal : " HorizontalAlignment="Left" Margin="215,241,0,0" VerticalAlignment="Top" Width="114" Grid.Column="1"/>
+        <Label Content="Téléphone : " HorizontalAlignment="Left" Margin="215,294,0,0" VerticalAlignment="Top" Width="100" Grid.Column="1"/>
+        <Label Content="Assurance : " HorizontalAlignment="Left" Margin="85,339,0,0" VerticalAlignment="Top" Width="100"/>
+        <TextBox x:Name="txtCodeP" Text="{Binding codeP}" HorizontalAlignment="Left" Height="23" Margin="380,241,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" IsReadOnly="True" Grid.Column="1"/>
+        <TextBox x:Name="txtTelephone" Text="{Binding telephone}"  HorizontalAlignment="Left" Height="23" Margin="380,294,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" IsReadOnly="True" Grid.Column="1"/>
+        <Button x:Name="btnRechercher" Content="Rechercher" HorizontalAlignment="Left" Margin="244,90,0,0" VerticalAlignment="Top" Width="75" Click="btnRechercher_Click" Grid.Column="1"/>
+        <TextBox x:Name="txtAssurance" Text="{Binding idAssurance}"  HorizontalAlignment="Left" Height="23" Margin="21,345,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsReadOnly="True" Grid.Column="1"/>
+        <TextBox x:Name="txtDate" Text="{Binding dateN}" HorizontalAlignment="Left" Height="23" Margin="21,191,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsReadOnly="True" Grid.Column="1"/>
+        <Button x:Name="btnQuitter" Content="Quitter" HorizontalAlignment="Left" Margin="365,570,0,0" VerticalAlignment="Top" Width="160" Grid.Column="1" Click="btnQuitter_Click" Grid.ColumnSpan="2"/>
+        <CheckBox x:Name="chkDerniereAdmission" Content="congé accordé" IsEnabled="false" HorizontalAlignment="Left" Margin="87,470,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.49,0.867"/>
+        <Label Content="Montant dû :" Grid.Column="1" HorizontalAlignment="Left" Margin="80,463,0,0" VerticalAlignment="Top" Width="90"/>
+        <TextBox x:Name="txtMontantDu" Grid.Column="1" IsReadOnly="true" HorizontalAlignment="Left" Height="23" Margin="178,465,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Dernière admission (si applicable) :" HorizontalAlignment="Left" Margin="55,409,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="200"/>
+        <Label Content="Renseignements sur le patient : " HorizontalAlignment="Left" Margin="55,134,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="190"/>
+        <Label Content="NSS plus proche parent :" HorizontalAlignment="Left" Margin="215,345,0,0" VerticalAlignment="Top" Width="148" Grid.Column="1"/>
+        <TextBox x:Name="txtNSSParent" Text="{Binding nssParent}"  HorizontalAlignment="Left" Height="23" Margin="380,348,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" IsReadOnly="True" Grid.Column="1"/>
+
+
+    </Grid>
+</Window>

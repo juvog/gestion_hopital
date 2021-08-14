@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="nlhModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="admission">
+    <Key>
+      <PropertyRef Name="idAdmission" />
+    </Key>
+    <Property Name="idAdmission" Type="Int32" Nullable="false" />
+    <Property Name="chirurgieProg" Type="Boolean" />
+    <Property Name="dateAdmission" Type="DateTime" Precision="0" />
+    <Property Name="dateChirurgie" Type="DateTime" Precision="0" />
+    <Property Name="dateConge" Type="DateTime" Precision="0" />
+    <Property Name="televiseur" Type="Boolean" />
+    <Property Name="telephone" Type="Boolean" />
+    <Property Name="prixReduit" Type="Boolean" />
+    <Property Name="nss" Type="Int32" />
+    <Property Name="noLit" Type="Int32" />
+    <Property Name="idMedecin" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Medecin" Relationship="Self.FK__admission__idMed__00200768" FromRole="admission" ToRole="Medecin" />
+    <NavigationProperty Name="Lit" Relationship="Self.FK__admission__noLit__7F2BE32F" FromRole="admission" ToRole="Lit" />
+    <NavigationProperty Name="Patient" Relationship="Self.FK__admission__nss__7E37BEF6" FromRole="admission" ToRole="Patient" />
+  </EntityType>
+  <EntityType Name="Assurance">
+    <Key>
+      <PropertyRef Name="idassurance" />
+    </Key>
+    <Property Name="idassurance" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="nomCompagnie" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Patients" Relationship="Self.FK__Patient__idAssur__778AC167" FromRole="Assurance" ToRole="Patient" />
+  </EntityType>
+  <EntityType Name="Departement">
+    <Key>
+      <PropertyRef Name="idDepartement" />
+    </Key>
+    <Property Name="idDepartement" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="nomDepartement" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Lits" Relationship="Self.FK__Lit__idDeparteme__7B5B524B" FromRole="Departement" ToRole="Lit" />
+  </EntityType>
+  <EntityType Name="Lit">
+    <Key>
+      <PropertyRef Name="noLit" />
+    </Key>
+    <Property Name="noLit" Type="Int32" Nullable="false" />
+    <Property Name="occupe" Type="Boolean" Nullable="false" />
+    <Property Name="idType" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="idDepartement" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="admissions" Relationship="Self.FK__admission__noLit__7F2BE32F" FromRole="Lit" ToRole="admission" />
+    <NavigationProperty Name="Departement" Relationship="Self.FK__Lit__idDeparteme__7B5B524B" FromRole="Lit" ToRole="Departement" />
+    <NavigationProperty Name="TypeLit" Relationship="Self.FK__Lit__idType__7A672E12" FromRole="Lit" ToRole="TypeLit" />
+  </EntityType>
+  <EntityType Name="Medecin">
+    <Key>
+      <PropertyRef Name="idMedecin" />
+    </Key>
+    <Property Name="idMedecin" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="nomMedecin" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="prenomMedecin" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="admissions" Relationship="Self.FK__admission__idMed__00200768" FromRole="Medecin" ToRole="admission" />
+  </EntityType>
+  <EntityType Name="Patient">
+    <Key>
+      <PropertyRef Name="nss" />
+    </Key>
+    <Property Name="nss" Type="Int32" Nullable="false" />
+    <Property Name="dateN" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="nom" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="prenom" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="adresse" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ville" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="codeP" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="telephone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="nssParent" Type="Int32" />
+    <Property Name="idAssurance" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="admissions" Relationship="Self.FK__admission__nss__7E37BEF6" FromRole="Patient" ToRole="admission" />
+    <NavigationProperty Name="Assurance" Relationship="Self.FK__Patient__idAssur__778AC167" FromRole="Patient" ToRole="Assurance" />
+  </EntityType>
+  <EntityType Name="TypeLit">
+    <Key>
+      <PropertyRef Name="idType" />
+    </Key>
+    <Property Name="idType" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="description" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Lits" Relationship="Self.FK__Lit__idType__7A672E12" FromRole="TypeLit" ToRole="Lit" />
+  </EntityType>
+  <Association Name="FK__admission__idMed__00200768">
+    <End Role="Medecin" Type="Self.Medecin" Multiplicity="0..1" />
+    <End Role="admission" Type="Self.admission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Medecin">
+        <PropertyRef Name="idMedecin" />
+      </Principal>
+      <Dependent Role="admission">
+        <PropertyRef Name="idMedecin" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__admission__noLit__7F2BE32F">
+    <End Role="Lit" Type="Self.Lit" Multiplicity="0..1" />
+    <End Role="admission" Type="Self.admission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lit">
+        <PropertyRef Name="noLit" />
+      </Principal>
+      <Dependent Role="admission">
+        <PropertyRef Name="noLit" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__admission__nss__7E37BEF6">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="0..1" />
+    <End Role="admission" Type="Self.admission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="nss" />
+      </Principal>
+      <Dependent Role="admission">
+        <PropertyRef Name="nss" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Patient__idAssur__778AC167">
+    <End Role="Assurance" Type="Self.Assurance" Multiplicity="0..1" />
+    <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Assurance">
+        <PropertyRef Name="idassurance" />
+      </Principal>
+      <Dependent Role="Patient">
+        <PropertyRef Name="idAssurance" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Lit__idDeparteme__7B5B524B">
+    <End Role="Departement" Type="Self.Departement" Multiplicity="0..1" />
+    <End Role="Lit" Type="Self.Lit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departement">
+        <PropertyRef Name="idDepartement" />
+      </Principal>
+      <Dependent Role="Lit">
+        <PropertyRef Name="idDepartement" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Lit__idType__7A672E12">
+    <End Role="TypeLit" Type="Self.TypeLit" Multiplicity="0..1" />
+    <End Role="Lit" Type="Self.Lit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TypeLit">
+        <PropertyRef Name="idType" />
+      </Principal>
+      <Dependent Role="Lit">
+        <PropertyRef Name="idType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="nlhEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="admissions" EntityType="Self.admission" />
+    <EntitySet Name="Assurances" EntityType="Self.Assurance" />
+    <EntitySet Name="Departements" EntityType="Self.Departement" />
+    <EntitySet Name="Lits" EntityType="Self.Lit" />
+    <EntitySet Name="Medecins" EntityType="Self.Medecin" />
+    <EntitySet Name="Patients" EntityType="Self.Patient" />
+    <EntitySet Name="TypeLits" EntityType="Self.TypeLit" />
+    <AssociationSet Name="FK__admission__idMed__00200768" Association="Self.FK__admission__idMed__00200768">
+      <End Role="Medecin" EntitySet="Medecins" />
+      <End Role="admission" EntitySet="admissions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__admission__noLit__7F2BE32F" Association="Self.FK__admission__noLit__7F2BE32F">
+      <End Role="Lit" EntitySet="Lits" />
+      <End Role="admission" EntitySet="admissions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__admission__nss__7E37BEF6" Association="Self.FK__admission__nss__7E37BEF6">
+      <End Role="Patient" EntitySet="Patients" />
+      <End Role="admission" EntitySet="admissions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Patient__idAssur__778AC167" Association="Self.FK__Patient__idAssur__778AC167">
+      <End Role="Assurance" EntitySet="Assurances" />
+      <End Role="Patient" EntitySet="Patients" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Lit__idDeparteme__7B5B524B" Association="Self.FK__Lit__idDeparteme__7B5B524B">
+      <End Role="Departement" EntitySet="Departements" />
+      <End Role="Lit" EntitySet="Lits" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Lit__idType__7A672E12" Association="Self.FK__Lit__idType__7A672E12">
+      <End Role="TypeLit" EntitySet="TypeLits" />
+      <End Role="Lit" EntitySet="Lits" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

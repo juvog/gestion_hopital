@@ -1,0 +1,9 @@
+﻿<Application x:Class="nlh.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:nlh"
+             StartupUri="accueil.xaml">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>
